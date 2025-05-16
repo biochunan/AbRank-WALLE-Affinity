@@ -17,6 +17,28 @@ conda update -f ./conda-env/waffle-gpu.yaml
 pip install -e .
 ```
 
+Copy and adjust the environment variables in the `.env` file.
+
+```sh
+cp .env.example .env
+```
+
+In .env you need to set the following variables:
+
+```sh
+ROOT_DIR=""  # the root directory of the project e.g. /workspace/AbRank-WALLE-Affinity
+RUNS_PATH=""  # the path to the runs folder e.g. /workspace/AbRank-WALLE-Affinity/runs
+DATA_PATH=""  # the path to the data folder e.g. /workspace/AbRank-WALLE-Affinity/data/local
+
+# if you use wandb for logging
+WANDB_PROJECT=""  # your wandb project name
+WANDB_ENTITY=""  # your wandb entity
+WANDB_API_KEY="" # your wandb api key obtained from wandb your profile page
+```
+
+NOTE: the environment variable `DATA_PATH` is used to set the `ROOT` path
+argument of the dataset objects.
+
 ## Dataset
 
 ### Predicted Antibody and Antigen Structures
