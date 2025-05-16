@@ -1,6 +1,6 @@
 # WALLE-Affinity (WAFFLE)
 
-This repository is the official implementation of `W`all`E`-`AFF`inity (WAFFLE),
+This repository is the official implementation of **W**a**LL**e-**AFF**inity (WAFFLE),
 integrating both Graph and Protein Language information for antibody-antigen
 affinity prediction framed as both ranking and regression question. Check out
 paper [AbRank: A Benchmark Dataset and Metric-Learning Framework for Antibody–Antigen Affinity Ranking](https://openreview.net/) (under review).
