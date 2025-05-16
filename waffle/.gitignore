@@ -1,0 +1,5 @@
+archive
+/runs
+/logs
+/outputs
+!config/env/

@@ -1,0 +1,28 @@
+# antibody encoder block
+ab:
+  node_feat_name: "x_b"
+  edge_index_name: "edge_index_b"
+  input_dim: 512
+  input_act: "relu"
+  dim_list:
+    - 128
+    - 64
+  act_list:
+    - "relu"
+  gcn_kwargs:
+    normalize: true
+
+# antigen encoder block
+ag:
+  node_feat_name: "x_g"
+  edge_index_name: "edge_index_g"
+  input_dim: 1280
+  input_act: "relu"
+  dim_list:
+    - 128
+    - 64
+  act_list:
+    - "relu"
+  gcn_kwargs:
+    normalize: true
+

@@ -1,0 +1,4 @@
+dropout1: 0.0  # applies to encoder output tensors, if 0 then no dropout
+lin_dim_1: 0   # if 0, then nn.Identity()
+dropout2: 0.0  # applies to linear layer 1 in regressor, if 0 then no dropout
+lin_dim_2: 1  # if 0, then nn.Identity()

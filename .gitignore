@@ -172,3 +172,36 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Development environments and tools
+.vscode
+.devcontainer
+.hydra
+.wandb
+wandb
+env-setup.sh
+
+# Project-specific directories
+dev
+ignore
+example
+Benchmark
+local
+archive
+_local
+
+# Data and artifacts
+/data/*
+!/data/download-aintibody-data.sh
+!/data/download-p2pxml-pdb.sh
+/ckpts
+experiments
+artifacts
+
+# Runtime and temporary files
+tmp
+run
+runs
+
+# user customized .env file
+.env

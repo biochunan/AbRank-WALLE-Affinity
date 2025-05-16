@@ -1,0 +1,39 @@
+datamodule:
+  _target_: data.abrank_regression_datamodule.AbRankDataModule
+  root: ???  # NOTE: must be set in the main config
+  data_registry_path: null  # optional
+  train_split_path: ???  # NOTE: must be set in the main config
+  test_split_path_dict: ???  # NOTE: must be set in the main config
+  seed: null  # NOTE: if null, will generate automatically; for reproducibility can set in the main config
+  num_workers: 4
+  batch_size: 32 # Batch size for dataloader
+  shuffle: True
+  follow_batch:
+    - "x_b"
+    - "x_g"
+  exclude_keys:
+    - "metadata"
+    - "y_b"
+    - "y_g"
+    - "edge_index_bg"
+  # --- dataset sampling parameters ---
+  # # training set only
+  # delta_y_min: 1.0
+  # delta_y: 2.0
+  # p: 0.5
+  # verbose: False
+  # # NOTE:
+  # # to adjust the training difficulty, one can adjust the value of both `delta_y`
+  # # and `p`, for example:
+  # # if one wants to make the training set harder, one can decrease the `delta_y`
+  # # and increase the `p`, meaning there will be more pairs that have similar
+  # # affinity, i.e. the model should learn to rank very similar pairs and the
+  # # learnt representations should be very sensitive.
+  #
+  # --- dataset batcher parameters ---
+  # use_batcher: True
+  # # batcher will provide fixed pairs for validation and test
+  # apply_delta_y: False
+  # apply_delta_y
+  # # if True, will apply delta_y to the training set that delta_y_min < abs(y1 - y2) < delta_y
+  # # if False, will include all pairs that delta_y_min < abs(y1 - y2)

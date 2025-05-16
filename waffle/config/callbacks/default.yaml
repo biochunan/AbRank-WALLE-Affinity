@@ -1,0 +1,16 @@
+defaults:
+  - model_checkpoint
+  - early_stopping
+  - model_summary
+  - rich_progress_bar
+  - learning_rate_monitor
+  - _self_
+
+model_checkpoint:
+  dirpath: ${env.paths.output_dir}/checkpoints
+  filename: "epoch_{epoch:03d}"
+  save_last: True
+  auto_insert_metric_name: False
+
+model_summary:
+  max_depth: -1

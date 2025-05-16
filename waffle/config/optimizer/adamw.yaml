@@ -1,0 +1,5 @@
+optimizer:
+  _target_: torch.optim.AdamW
+  _partial_: true
+  lr: 1e-3
+  weight_decay: 0.0  # no weight decay i.e. no L2 regularization

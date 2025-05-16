@@ -1,0 +1,74 @@
+# @package _global_
+work_dir: ${hydra:runtime.cwd}
+
+# === 1. Set config parameters ===
+name: "" # default name for the experiment, "" means logger (eg. wandb) will generate a unique name
+seed: null # seed for random number generators in pytorch, numpy and python.random
+num_workers: 2 # number of subprocesses to use for data loading.
+upload_ckpts_to_wandb: True
+
+# === 2. Specify defaults here. Defaults will be overwritten by equivalently named options in this file ===
+defaults:
+  - env: default
+  - hydra: default
+  - dataset: AbRank
+  - encoder: walle
+  - regressor: default
+  - optimizer: adamw
+  - callbacks: default
+  - scheduler: linear_warmup_cosine_decay
+  - logger: wandb
+  - trainer: gpu
+  - _self_ # see: https://hydra.cc/docs/upgrades/1.0_to_1.1/default_composition_order/. Adding _self_ at bottom means values in this file override defaults.
+
+# === 3. Specify options here. Options will override defaults ===
+dataset:
+  datamodule:
+    root: ${oc.env:DATA_PATH}  # /workspace/WALLE-Affinity/data/local/api
+    seed: 42
+    train_split_path: ${oc.env:DATA_PATH}/AbRank/processed/splits/Split_AF3/balanced-train-swapped.csv
+    test_split_path_dict:
+      generalization: ${oc.env:DATA_PATH}/AbRank/processed/splits/Split_AF3/test-generalization-swapped.csv
+      perturbation: ${oc.env:DATA_PATH}/AbRank/processed/splits/Split_AF3/test-perturbation-swapped.csv
+
+trainer:
+  max_epochs: 100  # NOTE: set to -1 to use indefinite sampling
+  check_val_every_n_epoch: 1  # check validation every epoch
+  gradient_clip_val: 1.0  # clip gradients
+  gradient_clip_algorithm: "norm"  # clip gradients by norm
+  accumulate_grad_batches: 1  # accumulate gradients over N batches
+  # dev options
+  limit_train_batches: 1.0  #  set to a float <1.0 to limit training to a fraction of the dataset; or an int to limit to a number of batches
+  limit_val_batches: 1.0  #  set to a float <1.0 to limit validation to a fraction of the dataset; or an int to limit to a number of batches
+  limit_test_batches: 1.0  #  set to a float <1.0 to limit testing to a fraction of the dataset; or an int to limit to a number of batches
+
+optimizer:
+  lr: 1e-5  # fine-tuning pretrained model, use small learning rate
+
+task_name: train
+
+model_init:
+  method: lazy_init
+
+callbacks:
+  early_stopping:
+    monitor: "val/accuracy"
+    mode: "max"
+    patience: 10
+    min_delta: 0.001
+
+  model_checkpoint:
+    monitor: "val/accuracy"
+    mode: "max"
+    save_top_k: 1                  # save the best model
+    save_last: True                # save the last model
+    save_on_train_epoch_end: True  # save checkpoint at the end of the training epoch
+
+  stop_on_nan:
+    monitor: "train/loss/avg"
+    mode: "min"
+
+# New: add rank loss
+loss_func:
+  margin_ranking_loss:
+    margin: 0.1  # torch.nn.MarginRankingLoss(margin=0.1)
