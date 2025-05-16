@@ -2,7 +2,7 @@
 
 This repository is the official implementation of **W**al**LE**-**AFF**inity (WAFFLE),
 integrating both Graph and Protein Language information for antibody-antigen
-affinity prediction framed as either a ranking or a regression tasks. Check out
+affinity prediction framed as either a ranking or a regression tasks. The method is descrived in our
 paper [AbRank: A Benchmark Dataset and Metric-Learning Framework for Antibody–Antigen Affinity Ranking](https://openreview.net/) (under review).
 
 ## Requirements
