@@ -52,11 +52,14 @@ Brief overview of the dataset:
 
 ### Pre-computed Embeddings
 
-To train WAFFLE, you will need to pre-download the pre-computed embeddings for
-the antibodies and antigens to a the folder
+To train WAFFLE, you will need to download the pre-computed embeddings for
+the antibodies and antigens to the folder
 `./data/local/AbRank/processed/ca_10/pairdata`.
 
-Download [pairdata.tar.gz]() and decompress the tarball to
+Pre-computed graph representations are accessible at 
+[pairdata](https://drive.google.com/drive/folders/13BXfJW-hfbqx-wKrvei5sCuvXBV6m0kJ), 
+which is a folder contains 10 tarballs.
+Download and decompress them to
 `./data/local/AbRank/processed/ca_10/pairdata/`.
 
 ### Splits
