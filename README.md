@@ -57,8 +57,8 @@ the antibodies and antigens to the folder
 `./data/local/AbRank/processed/ca_10/pairdata`.
 
 Pre-computed graph representations are accessible at 
-[pairdata](https://drive.google.com/drive/folders/13BXfJW-hfbqx-wKrvei5sCuvXBV6m0kJ), 
-which contains 10 tarballs `00.tar.zst ... 09.tar.zst`. Total size: `146.57GB`. 
+[pairdata](https://drive.google.com/drive/folders/13BXfJW-hfbqx-wKrvei5sCuvXBV6m0kJ) (Total size: `146.57GB`), 
+which contains 10 tarballs `00.tar.zst ... 09.tar.zst`. 
 Download and decompress them to
 `./data/local/AbRank/processed/ca_10/pairdata/`.
 
