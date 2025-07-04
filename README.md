@@ -3,7 +3,15 @@
 This repository is the official implementation of **W**al**LE**-**AFF**inity (WAFFLE),
 integrating both Graph and Protein Language information for antibody-antigen
 affinity prediction framed as either a ranking or a regression tasks. The method is descrived in our
-paper [AbRank: A Benchmark Dataset and Metric-Learning Framework for Antibody–Antigen Affinity Ranking](https://openreview.net/) (under review).
+paper [AbRank: A Benchmark Dataset and Metric-Learning Framework for Antibody–Antigen Affinity Ranking](https://doi.org/10.48550/arXiv.2506.17857) (under review).
+
+<a href="https://pytorch.org/get-started/locally/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-ee4c2c?logo=pytorch&logoColor=white"></a>
+[![PyG](https://img.shields.io/badge/PyTorch-Geometric-orange.svg)](https://pyg.org/)
+<a href="https://pytorchlightning.ai/"><img alt="Lightning" src="https://img.shields.io/badge/-Lightning-792ee5?logo=pytorchlightning&logoColor=white"></a>
+<a href="https://hydra.cc/"><img alt="Config: Hydra" src="https://img.shields.io/badge/Config-Hydra-89b8cd"></a>
+[![arXiv](https://img.shields.io/badge/arXiv-2506.17857-b31b1b.svg)](https://doi.org/10.48550/arXiv.2506.17857)
+[![Conference](http://img.shields.io/badge/NeurIPS-2025-4b44ce.svg)](https://neurips.cc/)
+
 
 ## Requirements
 
