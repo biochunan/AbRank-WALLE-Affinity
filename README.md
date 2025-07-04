@@ -62,7 +62,12 @@ which contains 10 tarballs `00.tar.zst ... 09.tar.zst`.
 Download and decompress them to
 `./data/local/AbRank/processed/ca_10/pairdata/`.
 
-To decompress, use `tar -xf 00.tar.zst`
+To decompress
+
+```sh
+# use 00.tar.zst as an example
+tar -xf 00.tar.zst -C ./data/local/AbRank/processed/ca_10/pairdata/
+```
 
 ### Splits
 
