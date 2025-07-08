@@ -44,9 +44,9 @@ class AbRankDataset(PygDataset):
     def __init__(
         self,
         root: str,
-        transform: Callable = None,
-        pre_transform: Callable = None,
-        pre_filter: Callable = None,
+        transform: Optional[Callable] = None,
+        pre_transform: Optional[Callable] = None,
+        pre_filter: Optional[Callable] = None,
     ):
         """
         Args:
@@ -160,9 +160,9 @@ class AbRankDataset(PygDataset):
 
     def download(self):
         FILEIDS = {
-            "md5sum.txt": "1R7RvubflNmzyCDBUIEQ0CtyVlBf8MbK2",
-            "registry.tar.gz": "1kFzpq1KGSq9cl1sjFLgEuDCDO-PCB4kA",
-            "splits.tar.gz": "1hXTyrizohcPoKAKqIZOAcqQ8yL_DoIrN",
+            "md5sum.txt": "1Zv-YQhZIT00pkYryV3mVT3SC05o2yt8x",
+            "registry.tar.gz": "1ZVkFUqyebwd_j6o9PPRl0PVHqjAkitZp",
+            "splits.tar.gz": "1dL4D5ScjZhpL1KmnEIPw2FbFjADxRAyy",
         }
         # First download md5sum.txt
         logger.info("Downloading md5sum.txt...")
@@ -256,7 +256,7 @@ class AbRankDataset(PygDataset):
 
 
 if __name__ == "__main__":
-    load_dotenv("/workspaces/WALLE-Affinity/.env")
-    ROOT_DIR = os.getenv("ROOT_DIR")
-    root = osp.join(ROOT_DIR, "data", "local", "api")
+    load_dotenv("/workspaces/AbRank-WALLE-Affinity/.env")
+    PROJECT_ROOT = os.getenv("ROOT_DIR")
+    root = osp.join(PROJECT_ROOT, "data", "local", "api")  # type:ignore
     ds = AbRankDataset(root=root)

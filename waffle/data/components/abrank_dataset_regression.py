@@ -44,9 +44,9 @@ class AbRankDataset(PygDataset):
     def __init__(
         self,
         root: str,
-        transform: Callable = None,
-        pre_transform: Callable = None,
-        pre_filter: Callable = None,
+        transform: Optional[Callable] = None,
+        pre_transform: Optional[Callable] = None,
+        pre_filter: Optional[Callable] = None,
     ):
         """
         Args:
@@ -134,16 +134,17 @@ class AbRankDataset(PygDataset):
     @property
     def processed_file_names(self) -> List[str]:
         """return the processed file names"""
+        base = osp.join("processed", "splits-regression", "Split_AF3")
         return [
             # registry file, maps dbID to file name e.g. 0 => "Ab-AIntibody-002---SARS-CoV-2-pairdata.pt"
             # the pt file is located in `self.processed_dir/ca_10/pairdata/`
             osp.join("processed", "registry-regression", "AbRank-regression-all.csv"),
             # Split_AF3 files
-            osp.join("processed", "splits-regression", "Split_AF3", "balanced-train-regression.csv"),
-            osp.join("processed", "splits-regression", "Split_AF3", "hard-ab-train-regression.csv"),
-            osp.join("processed", "splits-regression", "Split_AF3", "hard-ag-train-regression.csv"),
-            osp.join("processed", "splits-regression", "Split_AF3", "test-generalization-swapped.csv"),
-            osp.join("processed", "splits-regression", "Split_AF3", "test-perturbation-swapped.csv"),
+            osp.join(base, "balanced-train-regression.csv"),
+            osp.join(base, "hard-ab-train-regression.csv"),
+            osp.join(base, "hard-ag-train-regression.csv"),
+            osp.join(base, "test-generalization-swapped.csv"),
+            osp.join(base, "test-perturbation-swapped.csv"),
         ]
 
     def process(self):
@@ -152,10 +153,10 @@ class AbRankDataset(PygDataset):
         pass
 
     def download(self):
-        FILEIDS={
-            "md5sum-regression.txt": "1lHuIxih2s1hVdmmKbe6CeDNbk0LKuuV9",
-            "registry-regression.tar.gz": "1KyHelAixaaSqR5E2-XtyC8jOBExikFaz",
-            "splits-regression.tar.gz": "1JEShpgQl52D6PSkbj0zOQymnsJYMQbB5",
+        FILEIDS = {
+            "md5sum-regression.txt": "1b9IqVAIfXxt9Bkisn3SjDZ1KMZ8cVhId",
+            "registry-regression.tar.gz": "1ag1QOS-GtdRtpwGeVpiDcswAhLCbZxlD",
+            "splits-regression.tar.gz": "1w5UT6SEi5zp9fMYKt5CayJ9rEDHHK0_y",
         }
         # First download md5sum.txt
         logger.info("Downloading md5sum-regression.txt...")
@@ -181,12 +182,13 @@ class AbRankDataset(PygDataset):
 
             logger.info("Validating downloaded files...")
             validated, missing, corrupted = validate_downloaded_files(
-                download_dir=self.raw_dir,
-                md5sum_path=md5sum_path
+                download_dir=self.raw_dir, md5sum_path=md5sum_path
             )
 
             if missing or corrupted:
-                logger.error(f"Validation failed: {len(missing)} missing, {len(corrupted)} corrupted files")
+                logger.error(
+                    f"Validation failed: {len(missing)} missing, {len(corrupted)} corrupted files"
+                )
                 logger.error("Please re-run the download or manually fix the issues")
                 # Don't raise an exception here to allow the process to continue even with corrupted files
                 # Users will see the error message and can decide what to do
@@ -201,7 +203,7 @@ class AbRankDataset(PygDataset):
         for _, output_name in files_to_download:
             tar_path = osp.join(self.raw_dir, output_name)
             logger.info(f"Extracting {output_name} to {self.processed_dir}...")
-            with tarfile.open(tar_path, 'r') as tar:
+            with tarfile.open(tar_path, "r") as tar:
                 tar.extractall(self.processed_dir)
 
     def get(self, idx: int) -> PairData:
@@ -223,7 +225,9 @@ class AbRankDataset(PygDataset):
         g.y = logAff
         return g
 
-    def load_data_registry(self, data_registry_path: str) -> Dict[int, str]:
+    def load_data_registry(
+        self, data_registry_path: str
+    ) -> List[Tuple[int, str, float]]:
         """
         Load the data registry from the given path to `AbRank_all.csv`
         Example lines:
@@ -257,18 +261,15 @@ class AbRankDataset(PygDataset):
 
 
 if __name__ == "__main__":
-    load_dotenv("/workspaces/WALLE-Affinity/.env")
-    DATA_PATH = os.getenv("DATA_PATH")
-    ds = AbRankDataset(root=DATA_PATH)
-    '''
+    load_dotenv("/workspaces/AbRank-WALLE-Affinity/.env")
+    PROJECT_ROOT = os.getenv("ROOT_DIR")
+    ds = AbRankDataset(
+        root=osp.join(PROJECT_ROOT, "data", "local", "api")  # type:ignore
+    )
+    """
     [(0, 'Ab-AIntibody-002---SARS-CoV-2-pairdata.pt', -1.4776),
      (1, 'Ab-AIntibody-003---SARS-CoV-2-pairdata.pt', -1.4711),
      (2, 'Ab-AIntibody-004---SARS-CoV-2-pairdata.pt', -1.4647),
      (3, 'Ab-AIntibody-005---SARS-CoV-2-pairdata.pt', -1.4572),
      (4, 'Ab-AIntibody-006---SARS-CoV-2-pairdata.pt', -1.4486)]
-    '''
-    ds.data_registry[:5]
-    ds.data_registry[1000]  # (994, 'AbCoV-CnC2t1p1_D6---SARS-CoV-2-pairdata.pt', 1.4919)
-    ds.get(1000)
-    ds[1000]
-
+    """
